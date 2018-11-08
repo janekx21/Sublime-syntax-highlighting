@@ -1,0 +1,108 @@
+%YAML 1.2
+---
+# See http://www.sublimetext.com/docs/3/syntax.html
+file_extensions:
+  - mms
+scope: source.example-c
+
+contexts:
+  # The prototype context is prepended to all contexts but those setting
+  # meta_include_prototype: false.
+  prototype:
+    - include: comments
+
+  main:
+    # The main context is the initial starting point of our syntax.
+    # Include other contexts from here (or specify them directly).
+
+#    - include: assembler
+    - include: numbers
+    - include: strings
+    - include: registers
+#    - include: expressions
+#    - include: instrucions
+    - include: comments
+    - include: constants
+    - include: afterline
+    
+
+  afterline:
+  #  - match: '(?<=([0-9A-Za-z][ ])).+$'
+  # - match: '(^([A-Za-z0-9]*[ \t]+)[A-Z]{2,5}[ \t]+\S+[ \t])'
+    - match: '^[A-Za-z0-9]*[ \t]+'
+#      scope: variable.parameter.example-c #orange
+      set: assembler
+
+  arguments:
+    - include: numbers
+    - include: registers
+    - include: string
+    - match: ''
+    #  scope: variable.parameter.example-c #orange
+      set: commentText
+  #    pop: true
+   #   
+
+  commentText:
+    - match: '\s+.*'
+      scope: comment.line.double-slash.example-c #grau
+      pop: true
+
+  assembler:
+    - match: '\b(IS|LOC|GREG|PREFIX|LOCAL|BSPEC|ESPEC)\b\s*'
+      scope: storage.type.example-c # blaue
+      set: arguments
+    - match: '\b(BYTE|WYDE|TETRA|OCTA)\b\s*'
+      scope: storage.type.example-c # blaue
+      set: arguments
+    - match: '\b(TRAP|FCMP|FUN|FEQL|FADD|FIX|FSUB|FIXU|FLOT|FLOTU|SFLOT|SFLOTU|FMUL|FCMPE|FUNE|FEQLE|FDIV|FSQRT|FREM|FINT|MUL|MULU|DIV|DIVU|ADD|ADDU|SUB|SUBU|CMP|CMPU|NEG|NEGU|SL|SLU|SR|SRU|BN|BZ|BP|BOD|BNN|BNZ|BNP|BEV|PBN|PBZ|PBP|PBOD|PBNN|PBNZ|PBNP|PBEV|CSN|CSZ|CSP|CSOD|CSNN|CSNZ|CSNP|CSEV|ZSN|ZSZ|ZSP|ZSOD|ZSNN|ZSNZ|ZSNP|ZSEV|LDB|LDBU|LDW|LDWU|LDT|LDTU|LDO|LDOU|LDSF|LDHT|CSWAP|LDUNC|LDVTS|PRELD|PREGO|GO|STB|STBU|STW|STWU|STT|STTU|STO|STOU|STSF|STHT|STCO|STUNC|SYNCD|PREST|SYNCID|PUSHGO|OR|ORN|NOR|XOR|AND|ANDN|NAND|NXOR|BDIF|WDIF|TDIF|ODIF|MUX|SADD|MOR|MXOR|SETH|SETMH|SETML|SETL|INCH|INCMH|INCML|INCL|ORH|ORMH|ORML|ORL|ANDNH|ANDNMH|ANDNML|ANDNL|JMP|PUSHJ|GETA|PUT|POP|RESUME|UN|SAVE|SYNC|SWYM|GET|TRIP)\b\s*'
+      scope: keyword.control.flow.example-c #rot
+      set: arguments
+    - match: '\b(LDA|SET|UNSAVE)\b\s*'
+      scope: keyword.control.flow.example-c #rot
+      set: arguments
+
+  constants:
+    - match: 'Data_Segment|Pool_Segment|Stack_Segment|Fopen|Fclose|Fread|Fwrite|Fgets|Fputs|Fgetws|Fputws|Ftell|Fseek|StdOut|StdIn|StdErr|TextRead|TextWrite|BinaryRead|BinaryWrite|BinaryReadWrite'
+      scope: entity.name.example-c
+
+#  expressions:
+#    - match: '\b(TRAP|FCMP|FUN|FEQL|FADD|FIX|FSUB|FIXU|FLOT|FLOTU|SFLOT|SFLOTU|FMUL|FCMPE|FUNE|FEQLE|FDIV|FSQRT|FREM|FINT|MUL|MULU|DIV|DIVU|ADD|ADDU|SUB|SUBU|CMP|CMPU|NEG|NEGU|SL|SLU|SR|SRU|BN|BZ|BP|BOD|BNN|BNZ|BNP|BEV|PBN|PBZ|PBP|PBOD|PBNN|PBNZ|PBNP|PBEV|CSN|CSZ|CSP|CSOD|CSNN|CSNZ|CSNP|CSEV|ZSN|ZSZ|ZSP|ZSOD|ZSNN|ZSNZ|ZSNP|ZSEV|LDB|LDBU|LDW|LDWU|LDT|LDTU|LDO|LDOU|LDSF|LDHT|CSWAP|LDUNC|LDVTS|PRELD|PREGO|GO|STB|STBU|STW|STWU|STT|STTU|STO|STOU|STSF|STHT|STCO|STUNC|SYNCD|PREST|SYNCID|PUSHGO|OR|ORN|NOR|XOR|AND|ANDN|NAND|NXOR|BDIF|WDIF|TDIF|ODIF|MUX|SADD|MOR|MXOR|SETH|SETMH|SETML|SETL|INCH|INCMH|INCML|INCL|ORH|ORMH|ORML|ORL|ANDNH|ANDNMH|ANDNML|ANDNL|JMP|PUSHJ|GETA|PUT|POP|RESUME|UN|SAVE|SYNC|SWYM|GET|TRIP)\b'
+#      scope: keyword.control.flow.example-c
+
+#  instrucions:
+#    - match: '\b(LDA|SET|UNSAVE)\b'
+#      scope: keyword.control.example-c
+
+  numbers:
+    - match: '(\b([0-9]+)|(#[\da-fA-F]+)\b)'
+      scope: constant.numeric.integer.example-c
+
+  registers:
+    - match: '\$[0-9]{1,3}'
+      scope: variable.parameter.example-c
+
+  strings:
+    # Strings begin and end with quotes, and use backslashes as an escape
+    # character.
+    - match: '"'
+      scope: punctuation.definition.string.begin.example-c
+      push: inside_string
+
+  inside_string:
+    - meta_include_prototype: false
+    - meta_scope: string.quoted.double.example-c
+    - match: '"'
+      scope: punctuation.definition.string.end.example-c
+      pop: true
+
+  comments:
+    # Comments begin with a '//' and finish at the end of the line.
+    - match: '^[^a-zA-z0-9\n\t].+'
+      scope: comment.line.double-slash.example-c
+#      scope: punctuation.definition.comment.example-c
+#      push:
+#        # This is an anonymous context push for brevity.
+#        - meta_scope: comment.line.double-slash.example-c
+#        - match: $\n?
+#          pop: true
