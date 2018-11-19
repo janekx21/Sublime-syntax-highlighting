@@ -3,7 +3,7 @@
 # See http://www.sublimetext.com/docs/3/syntax.html
 file_extensions:
   - mms
-scope: source.example-c
+scope: source.mmix
 
 contexts:
   # The prototype context is prepended to all contexts but those setting
@@ -26,55 +26,55 @@ contexts:
 
 #  afterline:
 #    - match: '(?<=([\d\w] )).+'
-#      scope: comment.line.double-slash.example-c
+#      scope: comment.line.double-slash.mmix
 
   assembler:
     - match: '\b(IS|LOC|GREG|PREFIX|LOCAL|BSPEC|ESPEC)\b'
-      scope: storage.type.example-c
+      scope: storage.type.mmix
     - match: '\b(BYTE|WYDE|TETRA|OCTA)\b'
-      scope: storage.type.example-c
+      scope: storage.type.mmix
 
   constants:
-    - match: 'Data_Segment|Pool_Segment|Stack_Segment|Fopen|Fclose|Fread|Fwrite|Fgets|Fputs|Fgetws|Fputws|Ftell|Fseek|StdOut|StdIn|StdErr|TextRead|TextWrite|BinaryRead|BinaryWrite|BinaryReadWrite'
-      scope: entity.name.example-c
+    - match: 'Data_Segment|Pool_Segment|Stack_Segment|Halt|Fopen|Fclose|Fread|Fwrite|Fgets|Fputs|Fgetws|Fputws|Ftell|Fseek|StdOut|StdIn|StdErr|TextRead|TextWrite|BinaryRead|BinaryWrite|BinaryReadWrite'
+      scope: entity.name.mmix
 
   expressions:
     - match: '\b(TRAP|FCMP|FUN|FEQL|FADD|FIX|FSUB|FIXU|FLOT|FLOTU|SFLOT|SFLOTU|FMUL|FCMPE|FUNE|FEQLE|FDIV|FSQRT|FREM|FINT|MUL|MULU|DIV|DIVU|ADD|ADDU|SUB|SUBU|CMP|CMPU|NEG|NEGU|SL|SLU|SR|SRU|BN|BZ|BP|BOD|BNN|BNZ|BNP|BEV|PBN|PBZ|PBP|PBOD|PBNN|PBNZ|PBNP|PBEV|CSN|CSZ|CSP|CSOD|CSNN|CSNZ|CSNP|CSEV|ZSN|ZSZ|ZSP|ZSOD|ZSNN|ZSNZ|ZSNP|ZSEV|LDB|LDBU|LDW|LDWU|LDT|LDTU|LDO|LDOU|LDSF|LDHT|CSWAP|LDUNC|LDVTS|PRELD|PREGO|GO|STB|STBU|STW|STWU|STT|STTU|STO|STOU|STSF|STHT|STCO|STUNC|SYNCD|PREST|SYNCID|PUSHGO|OR|ORN|NOR|XOR|AND|ANDN|NAND|NXOR|BDIF|WDIF|TDIF|ODIF|MUX|SADD|MOR|MXOR|SETH|SETMH|SETML|SETL|INCH|INCMH|INCML|INCL|ORH|ORMH|ORML|ORL|ANDNH|ANDNMH|ANDNML|ANDNL|JMP|PUSHJ|GETA|PUT|POP|RESUME|UN|SAVE|SYNC|SWYM|GET|TRIP)\b'
-      scope: keyword.control.flow.example-c
+      scope: keyword.control.flow.mmix
 
   instrucions:
     - match: '\b(LDA|SET|SAVE|UNSAVE)\b'
-      scope: keyword.control.example-c
+      scope: keyword.control.mmix
 
   numbers:
     - match: '\b([0-9]+)|(#[\da-fA-F]+)\b'
-      scope: constant.numeric.integer.example-c
+      scope: constant.numeric.integer.mmix
 
   registers:
     - match: '(\$[0-9]{1,3})|(rA|rB|rC|rD|rE|rF|rG|rH|rI|rJ|rK|rL|rM|rN|rO|rP|rQ|rR|rS|rT|rU|rV|rW|rX|rY|rZ|rBB|rTT|rWW|rXX|rYY|rZZ)'
-      scope: variable.parameter.example-c
+      scope: variable.parameter.mmix
 
   strings:
     # Strings begin and end with quotes, and use backslashes as an escape
     # character.
     - match: '"'
-      scope: punctuation.definition.string.begin.example-c
+      scope: punctuation.definition.string.begin.mmix
       push: inside_string
 
   inside_string:
     - meta_include_prototype: false
-    - meta_scope: string.quoted.double.example-c
+    - meta_scope: string.quoted.double.mmix
     - match: '"'
-      scope: punctuation.definition.string.end.example-c
+      scope: punctuation.definition.string.end.mmix
       pop: true
 
   comments:
     # Comments begin with a '//' and finish at the end of the line.
     - match: '^[^a-zA-z0-9\n\t].*'
-      scope: comment.line.double-slash.example-c
-#      scope: punctuation.definition.comment.example-c
+      scope: comment.line.double-slash.mmix
+#      scope: punctuation.definition.comment.mmix
 #      push:
 #        # This is an anonymous context push for brevity.
-#        - meta_scope: comment.line.double-slash.example-c
+#        - meta_scope: comment.line.double-slash.mmix
 #        - match: $\n?
 #          pop: true
